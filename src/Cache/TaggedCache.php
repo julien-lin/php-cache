@@ -24,12 +24,12 @@ class TaggedCache implements TaggedCacheInterface
     /**
      * Préfixe pour les tags
      */
-    private const TAG_PREFIX = 'tag:';
+    private const TAG_PREFIX = 'tag_';
 
     /**
      * Préfixe pour les clés taguées
      */
-    private const TAGGED_KEY_PREFIX = 'tagged:';
+    private const TAGGED_KEY_PREFIX = 'tagged_';
 
     /**
      * Constructeur
@@ -72,7 +72,8 @@ class TaggedCache implements TaggedCacheInterface
         $sortedTags = $this->tags;
         sort($sortedTags);
         $tagHash = md5(implode('|', $sortedTags));
-        return self::TAGGED_KEY_PREFIX . $tagHash . ':' . $key;
+        // Utiliser _ comme séparateur au lieu de : pour respecter la validation des clés
+        return self::TAGGED_KEY_PREFIX . $tagHash . '_' . $key;
     }
 
     /**

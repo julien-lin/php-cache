@@ -5,7 +5,14 @@ Tous les changements notables de ce projet seront documentés dans ce fichier.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère à [Semantic Versioning](https://semver.org/lang/fr/).
 
-## [1.0.0] - 2024-01-XX
+## [1.0.1] - 2024-11-24
+
+### Corrigé
+- Correction du système de tags : remplacement du séparateur `:` par `_` pour respecter la validation des clés
+- Les clés taguées utilisent maintenant le format `tagged_hash_key` au lieu de `tagged:hash:key`
+- Correction de la validation des clés pour éviter les erreurs avec les tags
+
+## [1.0.0] - 2024-11-24
 
 ### Ajouté
 - Système de cache complet avec support de multiples drivers
