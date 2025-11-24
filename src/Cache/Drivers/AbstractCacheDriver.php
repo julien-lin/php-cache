@@ -45,7 +45,8 @@ abstract class AbstractCacheDriver implements CacheInterface
     protected function prepareKey(string $key): string
     {
         KeyValidator::validate($key);
-        return $this->prefix !== '' ? $this->prefix . ':' . $key : $key;
+        // Utiliser _ comme séparateur au lieu de : pour respecter la validation des clés
+        return $this->prefix !== '' ? $this->prefix . '_' . $key : $key;
     }
 
     /**
