@@ -1,6 +1,14 @@
-# PHP Cache - Système de Cache Moderne et Sécurisé
+# PHP Cache
 
-Un système de cache moderne et sécurisé pour PHP 8+ avec support de multiples drivers (File, Redis, Memcached, Array), tags, TTL et invalidation.
+[🇫🇷 Read in French](README.fr.md) | [🇬🇧 Read in English](README.md)
+
+## 💝 Support the project
+
+If this package is useful to you, consider [becoming a sponsor](https://github.com/sponsors/julien-lin) to support the development and maintenance of this open source project.
+
+---
+
+A modern and secure caching system for PHP 8+ with support for multiple drivers (File, Redis, Memcached, Array), tags, TTL, and invalidation.
 
 ## 🚀 Installation
 
@@ -8,11 +16,11 @@ Un système de cache moderne et sécurisé pour PHP 8+ avec support de multiples
 composer require julienlinard/php-cache
 ```
 
-**Requirements** : PHP 8.0 ou supérieur
+**Requirements**: PHP 8.0 or higher
 
-## ⚡ Démarrage rapide
+## ⚡ Quick Start
 
-### Configuration de base
+### Basic Configuration
 
 ```php
 <?php
@@ -21,14 +29,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use JulienLinard\Cache\Cache;
 
-// Initialisation avec configuration
+// Initialize with configuration
 Cache::init([
-    'default' => 'file', // ou 'array', 'redis'
+    'default' => 'file', // or 'array', 'redis'
     'drivers' => [
         'array' => [],
         'file' => [
             'path' => __DIR__ . '/cache',
-            'ttl' => 3600, // TTL par défaut en secondes
+            'ttl' => 3600, // Default TTL in seconds
         ],
         'redis' => [
             'host' => '127.0.0.1',
@@ -39,29 +47,29 @@ Cache::init([
     ],
 ]);
 
-// Utilisation simple
+// Simple usage
 Cache::set('user_123', ['name' => 'John', 'email' => 'john@example.com'], 3600);
 $user = Cache::get('user_123');
 ```
 
-## 📋 Fonctionnalités
+## 📋 Features
 
-- ✅ **Multiples drivers** : Array, File, Redis
-- ✅ **TTL (Time To Live)** : Expiration automatique des entrées
-- ✅ **Tags** : Système de tags pour invalidation groupée
-- ✅ **Sécurité** : Validation des clés, protection contre les injections
-- ✅ **Sérialisation sécurisée** : Utilisation de JSON avec validation
-- ✅ **Opérations multiples** : getMultiple, setMultiple, deleteMultiple
-- ✅ **Incrémentation/Décrémentation** : Support des valeurs numériques
-- ✅ **Interface fluide** : API simple et intuitive
+- ✅ **Multiple Drivers**: Array, File, Redis
+- ✅ **TTL (Time To Live)**: Automatic entry expiration
+- ✅ **Tags**: Tag system for grouped invalidation
+- ✅ **Security**: Key validation, protection against injections
+- ✅ **Secure Serialization**: JSON usage with validation
+- ✅ **Multiple Operations**: getMultiple, setMultiple, deleteMultiple
+- ✅ **Increment/Decrement**: Support for numeric values
+- ✅ **Fluid Interface**: Simple and intuitive API
 
 ## 📖 Documentation
 
-### Drivers disponibles
+### Available Drivers
 
-#### Array Driver (Mémoire)
+#### Array Driver (Memory)
 
-Le driver Array stocke les données en mémoire. Utile pour les tests et le développement.
+The Array driver stores data in memory. Useful for testing and development.
 
 ```php
 use JulienLinard\Cache\Cache;
@@ -70,27 +78,27 @@ Cache::init([
     'default' => 'array',
     'drivers' => [
         'array' => [
-            'prefix' => 'myapp', // Préfixe optionnel pour toutes les clés
-            'ttl' => 3600, // TTL par défaut
+            'prefix' => 'myapp', // Optional prefix for all keys
+            'ttl' => 3600, // Default TTL
         ],
     ],
 ]);
 ```
 
-#### File Driver (Disque)
+#### File Driver (Disk)
 
-Le driver File stocke les données dans des fichiers sur le système de fichiers.
+The File driver stores data in files on the filesystem.
 
 ```php
 Cache::init([
     'default' => 'file',
     'drivers' => [
         'file' => [
-            'path' => __DIR__ . '/cache', // Répertoire de cache
+            'path' => __DIR__ . '/cache', // Cache directory
             'prefix' => 'myapp',
             'ttl' => 3600,
-            'file_permissions' => 0644, // Permissions des fichiers
-            'directory_permissions' => 0755, // Permissions des répertoires
+            'file_permissions' => 0644, // File permissions
+            'directory_permissions' => 0755, // Directory permissions
         ],
     ],
 ]);
@@ -98,10 +106,10 @@ Cache::init([
 
 #### Redis Driver
 
-Le driver Redis nécessite l'extension PHP Redis.
+The Redis driver requires the PHP Redis extension.
 
 ```bash
-# Installation de l'extension Redis
+# Install Redis extension
 pecl install redis
 ```
 
@@ -112,10 +120,10 @@ Cache::init([
         'redis' => [
             'host' => '127.0.0.1',
             'port' => 6379,
-            'password' => 'your_password', // Optionnel
+            'password' => 'your_password', // Optional
             'database' => 0,
             'timeout' => 2.0,
-            'persistent' => false, // Connexion persistante
+            'persistent' => false, // Persistent connection
             'persistent_id' => null,
             'prefix' => 'myapp',
             'ttl' => 3600,
@@ -124,18 +132,18 @@ Cache::init([
 ]);
 ```
 
-### Opérations de base
+### Basic Operations
 
-#### Stocker une valeur
+#### Store a Value
 
 ```php
-// Avec TTL par défaut
+// With default TTL
 Cache::set('key', 'value');
 
-// Avec TTL personnalisé (en secondes)
+// With custom TTL (in seconds)
 Cache::set('key', 'value', 3600);
 
-// Données complexes
+// Complex data
 Cache::set('user', [
     'id' => 123,
     'name' => 'John',
@@ -143,118 +151,118 @@ Cache::set('user', [
 ], 3600);
 ```
 
-#### Récupérer une valeur
+#### Retrieve a Value
 
 ```php
-// Récupération simple
+// Simple retrieval
 $value = Cache::get('key');
 
-// Avec valeur par défaut
+// With default value
 $value = Cache::get('key', 'default_value');
 
-// Données complexes
+// Complex data
 $user = Cache::get('user', []);
 ```
 
-#### Vérifier l'existence
+#### Check Existence
 
 ```php
 if (Cache::has('key')) {
-    // La clé existe
+    // Key exists
 }
 ```
 
-#### Supprimer une valeur
+#### Delete a Value
 
 ```php
 Cache::delete('key');
 ```
 
-#### Vider tout le cache
+#### Clear All Cache
 
 ```php
 Cache::clear();
 ```
 
-### Opérations multiples
+### Multiple Operations
 
-#### Récupérer plusieurs valeurs
+#### Retrieve Multiple Values
 
 ```php
 $values = Cache::getMultiple(['key1', 'key2', 'key3'], null);
-// Retourne: ['key1' => value1, 'key2' => value2, 'key3' => value3]
+// Returns: ['key1' => value1, 'key2' => value2, 'key3' => value3]
 ```
 
-#### Stocker plusieurs valeurs
+#### Store Multiple Values
 
 ```php
 Cache::setMultiple([
     'key1' => 'value1',
     'key2' => 'value2',
     'key3' => 'value3',
-], 3600); // TTL commun pour toutes les clés
+], 3600); // Common TTL for all keys
 ```
 
-#### Supprimer plusieurs clés
+#### Delete Multiple Keys
 
 ```php
 $deleted = Cache::deleteMultiple(['key1', 'key2', 'key3']);
-// Retourne le nombre de clés supprimées
+// Returns the number of deleted keys
 ```
 
-### Incrémentation et décrémentation
+### Increment and Decrement
 
 ```php
-// Incrémenter
+// Increment
 Cache::set('counter', 0);
 Cache::increment('counter'); // 1
 Cache::increment('counter', 5); // 6
 
-// Décrémenter
+// Decrement
 Cache::decrement('counter'); // 5
 Cache::decrement('counter', 2); // 3
 ```
 
-### Pull (récupérer et supprimer)
+### Pull (Retrieve and Delete)
 
 ```php
-$value = Cache::pull('key'); // Récupère et supprime en une opération
+$value = Cache::pull('key'); // Retrieves and deletes in one operation
 ```
 
-### Utilisation avec un driver spécifique
+### Using a Specific Driver
 
 ```php
-// Utiliser un driver spécifique
+// Use a specific driver
 Cache::set('key', 'value', 3600, 'redis');
 $value = Cache::get('key', null, 'redis');
 
-// Ou récupérer le driver directement
+// Or get the driver directly
 $redisCache = Cache::driver('redis');
 $redisCache->set('key', 'value');
 ```
 
-### Système de tags
+### Tag System
 
-Les tags permettent de grouper des entrées de cache et de les invalider ensemble.
+Tags allow grouping cache entries and invalidating them together.
 
 ```php
-// Créer un cache avec tags
+// Create a tagged cache
 $taggedCache = Cache::tags(['users', 'posts']);
 
-// Stocker des valeurs avec tags
+// Store values with tags
 $taggedCache->set('user_1', ['name' => 'John']);
 $taggedCache->set('user_2', ['name' => 'Jane']);
 
-// Récupérer les clés associées à un tag
+// Get keys associated with a tag
 $keys = $taggedCache->getKeysByTag('users');
 
-// Invalider toutes les clés avec un tag
+// Invalidate all keys with a tag
 $taggedCache->invalidateTags('users');
-// ou plusieurs tags
+// or multiple tags
 $taggedCache->invalidateTags(['users', 'posts']);
 ```
 
-### Utilisation avancée avec CacheManager
+### Advanced Usage with CacheManager
 
 ```php
 use JulienLinard\Cache\CacheManager;
@@ -266,41 +274,41 @@ $manager = CacheManager::getInstance([
     ],
 ]);
 
-// Récupérer un driver
+// Get a driver
 $driver = $manager->driver('file');
 
-// Enregistrer un driver personnalisé
+// Register a custom driver
 $customDriver = new MyCustomDriver();
 $manager->registerDriver('custom', $customDriver);
 
-// Changer le driver par défaut
+// Change the default driver
 $manager->setDefaultDriver('redis');
 ```
 
-### Validation des clés
+### Key Validation
 
-Le système valide automatiquement les clés pour la sécurité :
+The system automatically validates keys for security:
 
-- ✅ Caractères autorisés : lettres, chiffres, `_`, `-`, `.`
-- ✅ Longueur maximale : 250 caractères
-- ✅ Protection contre les injections de chemins (`..`, `/`, `\`)
+- ✅ Allowed characters: letters, numbers, `_`, `-`, `.`
+- ✅ Maximum length: 250 characters
+- ✅ Protection against path injections (`..`, `/`, `\`)
 
 ```php
 use JulienLinard\Cache\KeyValidator;
 
-// Valider une clé
+// Validate a key
 try {
     KeyValidator::validate('valid_key_123');
 } catch (InvalidKeyException $e) {
-    // Clé invalide
+    // Invalid key
 }
 
-// Nettoyer une clé
+// Sanitize a key
 $cleanKey = KeyValidator::sanitize('invalid/key@test');
-// Retourne: 'invalid_key_test'
+// Returns: 'invalid_key_test'
 ```
 
-### Gestion des erreurs
+### Error Handling
 
 ```php
 use JulienLinard\Cache\Exceptions\CacheException;
@@ -310,41 +318,41 @@ use JulienLinard\Cache\Exceptions\DriverException;
 try {
     Cache::set('key', 'value');
 } catch (InvalidKeyException $e) {
-    // Clé invalide
+    // Invalid key
 } catch (DriverException $e) {
-    // Erreur avec le driver
+    // Driver error
 } catch (CacheException $e) {
-    // Autre erreur de cache
+    // Other cache error
 }
 ```
 
-## 🔒 Sécurité
+## 🔒 Security
 
-### Mesures de sécurité implémentées
+### Implemented Security Measures
 
-1. **Validation des clés** : Protection contre les injections de chemins
-2. **Sérialisation sécurisée** : Utilisation de JSON avec validation stricte
-3. **Permissions de fichiers** : Contrôle des permissions pour le driver File
-4. **Écriture atomique** : Le driver File utilise des fichiers temporaires pour éviter la corruption
-5. **Validation des entrées** : Toutes les entrées sont validées avant stockage
+1. **Key Validation**: Protection against path injections
+2. **Secure Serialization**: JSON usage with strict validation
+3. **File Permissions**: Permission control for File driver
+4. **Atomic Writing**: File driver uses temporary files to prevent corruption
+5. **Input Validation**: All entries are validated before storage
 
-### Bonnes pratiques
+### Best Practices
 
 ```php
-// ✅ BON : Clés simples et descriptives
+// ✅ GOOD: Simple and descriptive keys
 Cache::set('user_123', $userData);
 
-// ❌ MAUVAIS : Clés avec caractères spéciaux
-Cache::set('user/123', $userData); // Lève une exception
+// ❌ BAD: Keys with special characters
+Cache::set('user/123', $userData); // Throws exception
 
-// ✅ BON : Utiliser des préfixes
+// ✅ GOOD: Use prefixes
 Cache::init([
     'drivers' => [
         'file' => ['prefix' => 'myapp'],
     ],
 ]);
 
-// ✅ BON : Valider les données avant de les mettre en cache
+// ✅ GOOD: Validate data before caching
 $data = validateAndSanitize($userInput);
 Cache::set('key', $data);
 ```
@@ -352,16 +360,16 @@ Cache::set('key', $data);
 ## 🧪 Tests
 
 ```bash
-# Exécuter les tests
+# Run tests
 composer test
 
-# Avec couverture de code
+# With code coverage
 composer test-coverage
 ```
 
-## 📝 Exemples d'utilisation
+## 📝 Usage Examples
 
-### Cache de requêtes de base de données
+### Database Query Caching
 
 ```php
 use JulienLinard\Cache\Cache;
@@ -370,44 +378,44 @@ function getUser(int $id): array
 {
     $cacheKey = "user_{$id}";
     
-    // Vérifier le cache
+    // Check cache
     if (Cache::has($cacheKey)) {
         return Cache::get($cacheKey);
     }
     
-    // Récupérer depuis la base de données
+    // Retrieve from database
     $user = fetchUserFromDatabase($id);
     
-    // Mettre en cache pour 1 heure
+    // Cache for 1 hour
     Cache::set($cacheKey, $user, 3600);
     
     return $user;
 }
 ```
 
-### Cache avec invalidation par tags
+### Cache with Tag Invalidation
 
 ```php
 use JulienLinard\Cache\Cache;
 
-// Stocker des utilisateurs avec tag
+// Store users with tag
 $usersCache = Cache::tags('users');
 $usersCache->set('user_1', $user1, 3600);
 $usersCache->set('user_2', $user2, 3600);
 
-// Quand un utilisateur est modifié, invalider le tag
+// When a user is updated, invalidate the tag
 function updateUser(int $id, array $data): void
 {
-    // Mettre à jour en base de données
+    // Update in database
     updateUserInDatabase($id, $data);
     
-    // Invalider toutes les entrées avec le tag 'users'
+    // Invalidate all entries with 'users' tag
     $usersCache = Cache::tags('users');
     $usersCache->invalidateTags('users');
 }
 ```
 
-### Cache de vues/templates
+### View/Template Caching
 
 ```php
 use JulienLinard\Cache\Cache;
@@ -427,7 +435,7 @@ function renderView(string $template, array $data): string
 }
 ```
 
-### Compteur avec expiration
+### Counter with Expiration
 
 ```php
 use JulienLinard\Cache\Cache;
@@ -437,7 +445,7 @@ function incrementPageViews(string $pageId): int
     $key = "page_views_{$pageId}";
     
     if (!Cache::has($key)) {
-        // Initialiser avec expiration de 24h
+        // Initialize with 24h expiration
         Cache::set($key, 0, 86400);
     }
     
@@ -445,9 +453,9 @@ function incrementPageViews(string $pageId): int
 }
 ```
 
-## 🤝 Intégration avec d'autres packages
+## 🤝 Integration with Other Packages
 
-### Avec doctrine-php
+### With doctrine-php
 
 ```php
 use JulienLinard\Cache\Cache;
@@ -459,14 +467,14 @@ function getCachedEntity(EntityManager $em, string $entityClass, int $id): ?obje
     
     if (Cache::has($cacheKey)) {
         $data = Cache::get($cacheKey);
-        // Reconstruire l'entité depuis les données
+        // Rebuild entity from data
         return $em->getRepository($entityClass)->find($id);
     }
     
     $entity = $em->getRepository($entityClass)->find($id);
     
     if ($entity) {
-        // Stocker les données de l'entité
+        // Store entity data
         Cache::set($cacheKey, $entity->toArray(), 3600);
     }
     
@@ -478,21 +486,21 @@ function getCachedEntity(EntityManager $em, string $entityClass, int $id): ?obje
 
 ### Cache (Facade)
 
-- `Cache::init(array $config)` : Initialise le gestionnaire
-- `Cache::get(string $key, mixed $default = null, ?string $driver = null)` : Récupère une valeur
-- `Cache::set(string $key, mixed $value, ?int $ttl = null, ?string $driver = null)` : Stocke une valeur
-- `Cache::has(string $key, ?string $driver = null)` : Vérifie l'existence
-- `Cache::delete(string $key, ?string $driver = null)` : Supprime une valeur
-- `Cache::clear(?string $driver = null)` : Vide le cache
-- `Cache::increment(string $key, int $value = 1, ?string $driver = null)` : Incrémente
-- `Cache::decrement(string $key, int $value = 1, ?string $driver = null)` : Décrémente
-- `Cache::pull(string $key, mixed $default = null, ?string $driver = null)` : Récupère et supprime
-- `Cache::tags(string|array $tags, ?string $driver = null)` : Crée un cache tagué
-- `Cache::driver(?string $driver = null)` : Récupère un driver
+- `Cache::init(array $config)` : Initialize the manager
+- `Cache::get(string $key, mixed $default = null, ?string $driver = null)` : Retrieve a value
+- `Cache::set(string $key, mixed $value, ?int $ttl = null, ?string $driver = null)` : Store a value
+- `Cache::has(string $key, ?string $driver = null)` : Check existence
+- `Cache::delete(string $key, ?string $driver = null)` : Delete a value
+- `Cache::clear(?string $driver = null)` : Clear cache
+- `Cache::increment(string $key, int $value = 1, ?string $driver = null)` : Increment
+- `Cache::decrement(string $key, int $value = 1, ?string $driver = null)` : Decrement
+- `Cache::pull(string $key, mixed $default = null, ?string $driver = null)` : Retrieve and delete
+- `Cache::tags(string|array $tags, ?string $driver = null)` : Create tagged cache
+- `Cache::driver(?string $driver = null)` : Get a driver
 
 ### CacheInterface
 
-Tous les drivers implémentent `CacheInterface` avec les méthodes suivantes :
+All drivers implement `CacheInterface` with the following methods:
 
 - `get(string $key, mixed $default = null): mixed`
 - `set(string $key, mixed $value, ?int $ttl = null): bool`
@@ -506,11 +514,11 @@ Tous les drivers implémentent `CacheInterface` avec les méthodes suivantes :
 - `decrement(string $key, int $value = 1): int|false`
 - `pull(string $key, mixed $default = null): mixed`
 
-## 🐛 Dépannage
+## 🐛 Troubleshooting
 
-### Le driver File ne fonctionne pas
+### File Driver Not Working
 
-Vérifiez que le répertoire de cache existe et est accessible en écriture :
+Check that the cache directory exists and is writable:
 
 ```php
 $cachePath = __DIR__ . '/cache';
@@ -519,34 +527,35 @@ if (!is_dir($cachePath)) {
 }
 ```
 
-### Le driver Redis ne se connecte pas
+### Redis Driver Not Connecting
 
-1. Vérifiez que l'extension Redis est installée : `php -m | grep redis`
-2. Vérifiez que Redis est démarré : `redis-cli ping`
-3. Vérifiez les paramètres de connexion dans la configuration
+1. Check that Redis extension is installed: `php -m | grep redis`
+2. Check that Redis is running: `redis-cli ping`
+3. Check connection parameters in configuration
 
-### Erreur "Clé invalide"
+### "Invalid Key" Error
 
-Les clés doivent respecter le format suivant :
-- Caractères autorisés : `a-z`, `A-Z`, `0-9`, `_`, `-`, `.`
-- Longueur maximale : 250 caractères
-- Pas de chemins relatifs (`..`, `/`, `\`)
+Keys must follow this format:
+- Allowed characters: `a-z`, `A-Z`, `0-9`, `_`, `-`, `.`
+- Maximum length: 250 characters
+- No relative paths (`..`, `/`, `\`)
 
-## 📄 Licence
+## 📝 License
 
-MIT License - Voir le fichier LICENSE pour plus de détails.
+MIT License - See the LICENSE file for more details.
 
-## 👤 Auteur
+## 🤝 Contributing
 
-**Julien Linard**
+Contributions are welcome! Feel free to open an issue or a pull request.
 
-- Email: julien.linard.dev@gmail.com
-- GitHub: [@julien-lin](https://github.com/julien-lin)
+## 📧 Support
 
-## 🙏 Remerciements
+For any questions or issues, please open an issue on GitHub.
 
-Ce package fait partie de l'écosystème JulienLinard PHP et s'intègre parfaitement avec les autres packages :
-- `julienlinard/core-php`
-- `julienlinard/doctrine-php`
-- `julienlinard/auth-php`
+## 💝 Support the project
 
+If this package is useful to you, consider [becoming a sponsor](https://github.com/sponsors/julien-lin) to support the development and maintenance of this open source project.
+
+---
+
+**Developed with ❤️ by Julien Linard**
